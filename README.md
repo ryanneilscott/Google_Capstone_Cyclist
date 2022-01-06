@@ -1,2 +1,2 @@
 # Google_Capstone_Cyclist
-Scenario #1 of the Google Data Analyst Certificate Capstone
+This repository contains the code for my capstone projects from the Google Data Analytics Professional Certificate.
