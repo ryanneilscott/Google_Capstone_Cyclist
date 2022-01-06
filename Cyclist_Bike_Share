@@ -1,0 +1,10 @@
+SELECT 
+    (SELECT COUNT(member_casual)
+    FROM `annular-net-337304.Cyclist_Bike_Share.2020_12`
+    WHERE member_casual = 'member') AS Member_Count,
+    (SELECT COUNT(member_casual)
+    FROM `annular-net-337304.Cyclist_Bike_Share.2020_12`
+    WHERE member_casual = 'casual') AS Casual_Count
+
+FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+GROUP BY start_station_name
