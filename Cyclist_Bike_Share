@@ -1,14 +1,28 @@
-*/ The question is 'How do casual riders and members use a bike share differently?' 
-First, I determined what information I wanted to use to answer this question. 
-I decided that the date, time of day, start*/
+*/ 
+
+This is project #1 of the Google Data Analytics Capstone. 
+
+I was provided with 12 months of data for a fictional bikeshare company
+
+The question is 'How do casual riders and members use a bike share differently?' 
+
+The following is how I cleaned the data provided using Structured Query Language (SQL) code.
+
+*/
+
 
 SELECT 
-    cast(started_at AS date) AS Date,
-    cast(started_at AS Time) AS Time,
-    start_station_id,
-    start_station_name,
-    end_station_id,
-    end_station_name
-    member_casual
-FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` AS Dec_2020;
+    EXTRACT(HOUR FROM started_at) AS Hour,
+
+    COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders,
+    
+    COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders
+
+FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+
+WHERE start_station_name IS NOT NULL
+
+GROUP BY Hour
+
+ORDER BY Hour
 
