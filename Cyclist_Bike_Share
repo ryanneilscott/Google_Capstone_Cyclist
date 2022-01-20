@@ -11,6 +11,14 @@ The following is how I cleaned the data provided using Structured Query Language
 */
 
 
+--Select the data query
+
+SELECT *
+
+FROM `annular-net-337304.Cyclist_Bike_Share.2020_12`
+
+----------------------------------------------------------------------------------------------
+
 SELECT 
     EXTRACT(HOUR FROM started_at) AS Hour,
 
