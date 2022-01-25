@@ -15,47 +15,12 @@ SELECT *
 
 FROM `annular-net-337304.Cyclist_Bike_Share.2020_12`
 
-----------------------------------------------------------------------------------------------
-
-SELECT 
-    EXTRACT(HOUR FROM started_at) AS Hour,
-
-    COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders,
-    
-    COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders
-
-FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
-
-WHERE start_station_name IS NOT NULL
-
-GROUP BY Hour
-
-ORDER BY Hour;
-
---This shows us at what hours during the day Members and Casual riders used Cyclist Bike Share the most
+WHERE start_station_id IS NOT NULL
 
 
 ----------------------------------------------------------------------------------------------
 
-
-SELECT 
-    start_station_id AS Start_Station_Num,
-    COUNT(start_station_id) AS Num_of_Riders, 
-    COUNT(CASE WHEN member_casual = 'member' 
-        THEN 1 ELSE NULL END) AS Members,
-    COUNT(CASE WHEN member_casual = 'casual'
-        THEN 1 ELSE NULL END) AS Casual
-
-FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
-
-WHERE start_station_name IS NOT NULL 
-
-GROUP BY start_station_id
-
-ORDER BY num_of_riders DESC
-
-
-----------------------------------------------------------------------------------------------
+--Total Riders, Number of Member and Casual riders, and Percentages
 
 
 SELECT 
@@ -74,3 +39,95 @@ SELECT
 FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
 
 WHERE start_station_name IS NOT NULL
+
+*/
+
+From this query, I was able to determine that members made up 78 percent of the 119874 riders, 
+while casual riders made up the remaining 22 percent
+
+*/
+
+
+----------------------------------------------------------------------------------------------
+
+
+--This shows us at what hours over the course of a month during the day Members and Casual riders used Cyclist Bike Share the most
+
+
+SELECT 
+    EXTRACT(HOUR FROM started_at) AS Hour,
+
+    COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders,
+    
+    COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders
+
+FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+
+WHERE start_station_name IS NOT NULL
+
+GROUP BY Hour
+
+ORDER BY Hour;
+
+
+----------------------------------------------------------------------------------------------
+
+--Select the number of riders using each start station to determine which stations were most popular amongst members and casual riders
+
+SELECT 
+    start_station_id AS Start_Station_Num,
+    
+    COUNT(start_station_id) AS Num_of_Riders, 
+    
+    COUNT(CASE WHEN member_casual = 'member' 
+        THEN 1 ELSE NULL END) AS Members,
+    
+    COUNT(CASE WHEN member_casual = 'casual'
+        THEN 1 ELSE NULL END) AS Casual
+
+FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+
+WHERE start_station_name IS NOT NULL 
+
+GROUP BY start_station_id
+
+ORDER BY num_of_riders DESC
+
+*/
+
+With this query, I was able to determine the most popular starting stations amongst riders and 
+the number of members and casual riders who frequented these stations.
+
+*/
+
+
+----------------------------------------------------------------------------------------------
+
+--
+
+SELECT 
+    rideable_type AS Bike_Type,
+
+    COUNT(rideable_type) AS Total_Riders,
+
+    COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders,
+    
+    COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders,
+
+    ROUND(COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) / 
+    COUNT(member_casual), 1) * 100 AS Member_Percent,
+
+    ROUND(COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) / 
+    (COUNT(member_casual)), 1) * 100 AS Casual_Percent
+
+FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+
+GROUP BY rideable_type
+
+*/
+
+From this query, I was able to determine the most popular bike option amonst bike riders (Classic
+Bike), the most popular bike used by members (the classic bike), the most popular bike used by
+casual riders (the electric bike), and the least used bike by both users (the dockable bike).
+
+*/
