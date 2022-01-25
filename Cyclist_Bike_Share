@@ -6,8 +6,6 @@ I was provided with 12 months of data for a fictional bikeshare company
 
 The question is 'How do casual riders and members use a bike share differently?' 
 
-The following is how I cleaned the data provided using Structured Query Language (SQL) code.
-
 */
 
 
@@ -32,5 +30,47 @@ WHERE start_station_name IS NOT NULL
 
 GROUP BY Hour
 
-ORDER BY Hour
+ORDER BY Hour;
 
+--This shows us at what hours during the day Members and Casual riders used Cyclist Bike Share the most
+
+
+----------------------------------------------------------------------------------------------
+
+
+SELECT 
+    start_station_id AS Start_Station_Num,
+    COUNT(start_station_id) AS Num_of_Riders, 
+    COUNT(CASE WHEN member_casual = 'member' 
+        THEN 1 ELSE NULL END) AS Members,
+    COUNT(CASE WHEN member_casual = 'casual'
+        THEN 1 ELSE NULL END) AS Casual
+
+FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+
+WHERE start_station_name IS NOT NULL 
+
+GROUP BY start_station_id
+
+ORDER BY num_of_riders DESC
+
+
+----------------------------------------------------------------------------------------------
+
+
+SELECT 
+    COUNT(member_casual) AS Total_Riders,
+    
+    COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders,
+    
+    COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders,
+    
+    ROUND(COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) / 
+    COUNT(member_casual), 2) * 100 AS Member_Percent,
+
+    ROUND(COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) / 
+    (COUNT(member_casual)), 2) * 100 AS Casual_Percent
+
+FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+
+WHERE start_station_name IS NOT NULL
