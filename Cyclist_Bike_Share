@@ -38,7 +38,7 @@ SELECT
 
 FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
 
-WHERE start_station_name IS NOT NULL
+WHERE start_station_name IS NOT NULL;
 
 */
 
@@ -69,6 +69,14 @@ GROUP BY Hour
 
 ORDER BY Hour;
 
+*/
+
+From this query, I was able to export the data onto a spreadsheet and create line graphs as a
+visualization to determine if there were time where one group of riders were more likely to 
+use the bike share.
+
+*/
+
 
 ----------------------------------------------------------------------------------------------
 
@@ -91,7 +99,7 @@ WHERE start_station_name IS NOT NULL
 
 GROUP BY start_station_id
 
-ORDER BY num_of_riders DESC
+ORDER BY num_of_riders DESC;
 
 */
 
@@ -122,7 +130,7 @@ SELECT
 
 FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
 
-GROUP BY rideable_type
+GROUP BY rideable_type;
 
 */
 
