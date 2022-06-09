@@ -10,8 +10,8 @@ I used SQL and Google Sheets for my analysis.
 
 Upon completetion of my analysis, I had determined:
 
-The most popular starting stations amongst riders and the number of members and casual riders who frequented these stations
+- The most popular starting stations amongst riders and the number of members and casual riders who frequented these stations
 
-The most popular bike option amonst bike riders (Classic Bike), the most popular bike used by members (the classic bike), the most popular bike used by casual riders (the electric bike), and the least used bike by both users (the dockable bike)
+- The most popular bike option amonst bike riders (Classic Bike), the most popular bike used by members (the classic bike), the most popular bike used by casual riders (the electric bike), and the least used bike by both users (the dockable bike)
 
-Members used the bike share more consistently throughout the year, while casual riders were more likely to use the bike share as the year grew closer the the summer months
+- Members used the bike share more consistently throughout the year, while casual riders were more likely to use the bike share as the year grew closer the the summer months
