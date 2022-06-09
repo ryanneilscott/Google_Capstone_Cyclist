@@ -1,5 +1,6 @@
 # Google_Capstone_Cyclist
 SQL Project
+
 This repository contains the code for my capstone projects from the Google Data Analytics Professional Certificate.
 
 As part of the Google Data Analytics Professional Certificate, we were provided an optional capstone project at the end of the curriculum. The project was a culmination of the skills gained over the course of the program, including spreadsheets, Structured Query Language (SQL), R, and Tableau.
