@@ -9,13 +9,50 @@ The question is 'How do casual riders and members use a bike share differently?'
 */
 
 
---Select the data query
+--Combined the 12 months of data into a single table
 
 SELECT *
-
-FROM `annular-net-337304.Cyclist_Bike_Share.2020_12`
-
-WHERE start_station_id IS NOT NULL
+INTO Combined_Table
+FROM
+(SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_01`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_02`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_03`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_04`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_05`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_06`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_06`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_07`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_08`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_09`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_10`
+UNION ALL
+SELECT *
+FROM `annular-net-337304.Cyclist_Bike_Share.2021_11`
+) AS Combined_Table;
 
 
 ----------------------------------------------------------------------------------------------
