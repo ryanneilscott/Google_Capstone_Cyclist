@@ -136,22 +136,18 @@ use the bike share.
 --Select the number of riders using each start station to determine which stations were most popular amongst members and casual riders
 
 SELECT 
-    start_station_id AS Start_Station_Num,
-    
-    COUNT(start_station_id) AS Num_of_Riders, 
-    
-    COUNT(CASE WHEN member_casual = 'member' 
-        THEN 1 ELSE NULL END) AS Members,
-    
-    COUNT(CASE WHEN member_casual = 'casual'
-        THEN 1 ELSE NULL END) AS Casual
-
-FROM 'annular-net-337304.Cyclist_Bike_Share.Combined_Table' 
-
-
-GROUP BY start_station_id
-
-ORDER BY num_of_riders DESC;
+    start_station_id AS Start_Station_Num
+    , start_station_name AS Station_Name
+    , COUNT(start_station_id) AS Num_of_Riders
+    , COUNT(CASE WHEN member_casual = 'member' THEN 1 ELSE NULL END) AS Members
+    , COUNT(CASE WHEN member_casual = 'casual' THEN 1 ELSE NULL END) AS Casual
+FROM 
+    'annular-net-337304.Cyclist_Bike_Share.Combined_Table' 
+GROUP BY 
+    start_station_id
+    , start_station_name
+ORDER BY 
+    num_of_riders DESC;
 
 */
 
