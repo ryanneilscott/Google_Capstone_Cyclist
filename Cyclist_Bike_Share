@@ -1,4 +1,4 @@
-*/ 
+/* 
 
 This is project #1 of the Google Data Analytics Capstone. 
 
@@ -11,48 +11,50 @@ The question is 'How do casual riders and members use a bike share differently?'
 
 --Combined the 12 months of data into a single table
 
-SELECT *
-INTO Combined_Table
-FROM
-(SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_01`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_02`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_03`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_04`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_05`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_06`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_06`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_07`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_08`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_09`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_10`
-UNION ALL
-SELECT *
-FROM `annular-net-337304.Cyclist_Bike_Share.2021_11`
-) AS Combined_Table;
+INSERT INTO 
+    'annular-net-337304.Cyclist_Bike_Share.Combined_Table'
+SELECT 
+    *
+FROM (
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_01`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_02`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_03`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_04`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_05`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_06`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_06`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_07`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_08`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_09`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_10`
+    UNION ALL
+    SELECT *
+    FROM `annular-net-337304.Cyclist_Bike_Share.2021_11`
+    ) AS Combined_Table;
 
 
 ----------------------------------------------------------------------------------------------
@@ -61,26 +63,20 @@ FROM `annular-net-337304.Cyclist_Bike_Share.2021_11`
 
 
 SELECT 
-    COUNT(member_casual) AS Total_Riders,
-    
-    COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders,
-    
-    COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders,
-    
-    ROUND(COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) / 
-    COUNT(member_casual), 2) * 100 AS Member_Percent,
+    COUNT(ride_id) AS Total_Riders
+    , SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS Member_Riders
+    , SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS Casual_Riders
+    , ROUND(SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) / COUNT(member_casual), 2) * 100 AS Member_Percent
+    , ROUND(SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) / COUNT(member_casual), 2) * 100 AS Casual_Percent
+FROM 
+    'annular-net-337304.Cyclist_Bike_Share.Combined_Table' 
+WHERE 
+    ride_id IS NOT NULL;
 
-    ROUND(COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) / 
-    (COUNT(member_casual)), 2) * 100 AS Casual_Percent
+/*
 
-FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
-
-WHERE start_station_name IS NOT NULL;
-
-*/
-
-From this query, I was able to determine that members made up 78 percent of the 119874 riders, 
-while casual riders made up the remaining 22 percent
+From this query, I was able to determine that out of 6,208,691 riders in the given time frame, members made up 54 percent of riders (3,348,663), 
+while casual riders made up the remaining 46 percent (2,860,028).
 
 */
 
@@ -88,25 +84,45 @@ while casual riders made up the remaining 22 percent
 ----------------------------------------------------------------------------------------------
 
 
---This shows us at what hours over the course of a month during the day Members and Casual riders used Cyclist Bike Share the most
+--This query shows us at what hour, day of week, and month over the time frame that Members and Casual riders used Cyclist Bike Share the most
 
 
 SELECT 
-    EXTRACT(HOUR FROM started_at) AS Hour,
+    EXTRACT(HOUR FROM started_at) AS Hour
+    , COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders
+    , COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders
+FROM 
+    'annular-net-337304.Cyclist_Bike_Share.Combined_Table' 
+GROUP BY 
+    Hour
+ORDER BY 
+    Hour;
 
-    COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders,
-    
-    COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders
 
-FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+SELECT 
+    EXTRACT(MONTH FROM started_at) AS MONTH
+    , COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders
+    , COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders
+FROM 
+    'annular-net-337304.Cyclist_Bike_Share.Combined_Table' 
+GROUP BY 
+    MONTH
+ORDER BY 
+    MONTH;
 
-WHERE start_station_name IS NOT NULL
 
-GROUP BY Hour
+SELECT 
+    EXTRACT(DAYOFWEEK FROM started_at) AS DAYOFWEEK
+    , COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders
+    , COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders
+FROM 
+    'annular-net-337304.Cyclist_Bike_Share.Combined_Table' 
+GROUP BY 
+    DAYOFWEEK
+ORDER BY 
+    DAYOFWEEK;
 
-ORDER BY Hour;
-
-*/
+/*
 
 From this query, I was able to export the data onto a spreadsheet and create line graphs as a
 visualization to determine if there were time where one group of riders were more likely to 
@@ -130,9 +146,8 @@ SELECT
     COUNT(CASE WHEN member_casual = 'casual'
         THEN 1 ELSE NULL END) AS Casual
 
-FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
+FROM 'annular-net-337304.Cyclist_Bike_Share.Combined_Table' 
 
-WHERE start_station_name IS NOT NULL 
 
 GROUP BY start_station_id
 
@@ -151,25 +166,20 @@ the number of members and casual riders who frequented these stations.
 --
 
 SELECT 
-    rideable_type AS Bike_Type,
+   rideable_type AS Bike_Type
+    , COUNT(rideable_type) AS Total_Riders
+    , SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS Member_Riders
+    , SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS Casual_Riders
+    , ROUND(SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) / 
+        COUNT(member_casual), 1) * 100 AS Member_Percent
+    , ROUND(COUNT(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) / 
+        COUNT(member_casual), 1) * 100 AS Casual_Percent
+FROM 
+    `annular-net-337304.Cyclist_Bike_Share.Combined_Table'  
+GROUP BY 
+    rideable_type;
 
-    COUNT(rideable_type) AS Total_Riders,
-
-    COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders,
-    
-    COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders,
-
-    ROUND(COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) / 
-    COUNT(member_casual), 1) * 100 AS Member_Percent,
-
-    ROUND(COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) / 
-    (COUNT(member_casual)), 1) * 100 AS Casual_Percent
-
-FROM `annular-net-337304.Cyclist_Bike_Share.2020_12` 
-
-GROUP BY rideable_type;
-
-*/
+/*
 
 From this query, I was able to determine the most popular bike option amonst bike riders (Classic
 Bike), the most popular bike used by members (the classic bike), the most popular bike used by
