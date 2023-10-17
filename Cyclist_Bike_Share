@@ -74,17 +74,15 @@ WHERE
     ride_id IS NOT NULL;
 
 /*
-
-From this query, I was able to determine that out of 6,208,691 riders in the given time frame, members made up 54 percent of riders (3,348,663), 
-while casual riders made up the remaining 46 percent (2,860,028).
-
+From this query, I was able to determine that out of 6,208,691 riders in the given time frame, members made up 54 percent 
+of riders (3,348,663), while casual riders made up the remaining 46 percent (2,860,028).
 */
 
 
 ----------------------------------------------------------------------------------------------
 
 
---This query shows us at what hour, day of week, and month over the time frame that Members and Casual riders used Cyclist Bike Share the most
+--These queries show us at what hour, day of week, and month over the time frame that Members and Casual riders used Cyclist Bike Share the most
 
 
 SELECT 
@@ -123,11 +121,9 @@ ORDER BY
     DAYOFWEEK;
 
 /*
-
 From this query, I was able to export the data onto a spreadsheet and create line graphs as a
 visualization to determine if there were time where one group of riders were more likely to 
 use the bike share.
-
 */
 
 
@@ -149,11 +145,9 @@ GROUP BY
 ORDER BY 
     num_of_riders DESC;
 
-*/
-
+/*
 With this query, I was able to determine the most popular starting stations amongst riders and 
 the number of members and casual riders who frequented these stations.
-
 */
 
 
@@ -176,9 +170,7 @@ GROUP BY
     rideable_type;
 
 /*
-
 From this query, I was able to determine the most popular bike option amonst bike riders (Classic
-Bike), the most popular bike used by members (the classic bike), the most popular bike used by
-casual riders (the electric bike), and the least used bike by both users (the dockable bike).
-
+Bike), the most popular bike used by members and casual riders (the classic bike), and the least used bike by both 
+users (the dockable bike), though the docked bike was more likely to be used by casual riders than members.
 */
