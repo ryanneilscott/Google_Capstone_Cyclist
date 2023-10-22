@@ -87,8 +87,8 @@ of riders (3,348,663), while casual riders made up the remaining 46 percent (2,8
 
 SELECT 
     EXTRACT(HOUR FROM started_at) AS Hour
-    , COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders
-    , COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders
+    , SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS Member_Riders
+    , SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS Casual_Riders
 FROM 
     'annular-net-337304.Cyclist_Bike_Share.Combined_Table' 
 GROUP BY 
@@ -99,8 +99,8 @@ ORDER BY
 
 SELECT 
     EXTRACT(MONTH FROM started_at) AS MONTH
-    , COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders
-    , COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders
+    , SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS Member_Riders
+    , SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS Casual_Riders
 FROM 
     'annular-net-337304.Cyclist_Bike_Share.Combined_Table' 
 GROUP BY 
@@ -111,8 +111,8 @@ ORDER BY
 
 SELECT 
     EXTRACT(DAYOFWEEK FROM started_at) AS DAYOFWEEK
-    , COUNT(CASE WHEN member_casual = 'member' THEN started_at ELSE NULL END) AS Member_Riders
-    , COUNT(CASE WHEN member_casual = 'casual' THEN started_at ELSE NULL END) AS Casual_Riders
+    , SUM(CASE WHEN member_casual = 'member' THEN 1 ELSE 0 END) AS Member_Riders
+    , SUM(CASE WHEN member_casual = 'casual' THEN 1 ELSE 0 END) AS Casual_Riders
 FROM 
     'annular-net-337304.Cyclist_Bike_Share.Combined_Table' 
 GROUP BY 
