@@ -12,10 +12,8 @@ I used SQL and Google Sheets for my analysis.
 
 Upon completetion of my analysis, I had determined:
 
-- The most popular starting stations amongst riders and the number of members and casual riders who frequented these stations
+- Members are primarily using Cyclist Bike Share during the Monday through Friday work week, with large number of members using
+  bikes between 5am and 8am, as well as 3pm and 5pm.
+- Casual riders primarily use our products during the weekend and during the summer months of June, July, and August.
+- Of riders that chose to use the Docked Bike option, 98% of riders were casual riders.
 
-- The most popular bike option amonst bike riders (Classic Bike), the most popular bike used by members (the classic bike), 
-the most popular bike used by casual riders (the electric bike), and the least used bike by both users (the dockable bike)
-
-- Members used the bike share more consistently throughout the year, while casual riders were more likely to use the bike share
- as the year grew closer the the summer months
